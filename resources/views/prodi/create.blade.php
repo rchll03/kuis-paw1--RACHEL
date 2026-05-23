@@ -1,76 +1,84 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Tambah Prodi</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
 
-<div class="container mt-5">
+    <div class="container mt-5">
 
-    <div class="card shadow">
+        <div class="card shadow">
 
-        <div class="card-header bg-primary text-white">
-            <h3>Tambah Prodi</h3>
-        </div>
-
-        <div class="card-body">
-
-            @if($errors->any())
-
-            <div class="alert alert-danger">
-                <strong>Data gagal disimpan!</strong>
-
-                <ul class="mt-2">
-
-                    @foreach($errors->all() as $error)
-
-                    <li>{{ $error }}</li>
-
-                    @endforeach
-
-                </ul>
+            <div class="card-header bg-primary text-white">
+                <h3>Tambah Prodi</h3>
             </div>
 
-            @endif
+            <div class="card-body">
 
-            <form action="/prodi" method="POST">
+                @if ($errors->any())
 
-                @csrf
+                    <div class="alert alert-danger">
+                        <strong>Data gagal disimpan!</strong>
 
-                <div class="mb-3">
-                    <label>Nama Prodi</label>
+                        <ul class="mt-2">
 
-                    <input type="text" name="nama_prodi" class="form-control">
-                </div>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
 
-                <div class="mb-3">
-                    <label>Nama Kaprodi</label>
+                        </ul>
+                    </div>
 
-                    <input type="text" name="nama_kaprodi" class="form-control">
-                </div>
+                @endif
 
-                <div class="mb-3">
-                    <label>Alias Prodi</label>
+                <form action="/prodi" method="POST">
 
-                    <input type="text" name="alias_prodi" class="form-control">
-                </div>
+                    @csrf
 
-                <button type="submit" class="btn btn-primary">
-                    Simpan
-                </button>
+                    <div class="mb-3">
+                        <label>Nama Prodi</label>
+                        <input type="text" name="nama_prodi" class="form-control">
+                    </div>
 
-                <a href="/prodi" class="btn btn-secondary">
-                    Kembali
-                </a>
+                    <div class="mb-3">
+                        <label>Nama Kaprodi</label>
 
-            </form>
+                        <input type="text" name="nama_kaprodi" class="form-control">
+                    </div>
 
+                    <div class="mb-3">
+                        <label>Alias Prodi</label>
+
+                        <input type="text" name="alias_prodi" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label>Fakultas</label>
+                        <select name="fakultas_id" class="select-form"id="fakultas">
+                            <option value="">...</option>
+                            @foreach ($listFakultas as $item)
+                                <option value="{{ $item->id }}">{{ $item->nama_fakultas ?? '-' }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Simpan
+                    </button>
+
+                    <a href="/prodi" class="btn btn-secondary">
+                        Kembali
+                    </a>
+
+                </form>
+
+            </div>
         </div>
+
     </div>
 
-</div>
-
 </body>
+
 </html>

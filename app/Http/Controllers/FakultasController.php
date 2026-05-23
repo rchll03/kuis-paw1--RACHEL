@@ -15,19 +15,21 @@ class FakultasController extends Controller
 
     public function create()
     {
-        return view('fakultas.create');
+       
+        return view ('fakultas.create', compact('listFakultas'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'nama_fakultas' => 'required',
-            'nama_dekan' => 'required'
+            'nama_dekan' => 'required',
+         
         ]);
 
         Fakultas::create([
             'nama_fakultas' => $request->nama_fakultas,
-            'nama_dekan' => $request->nama_dekan
+            'nama_dekan' => $request->nama_dekan,
         ]);
 
         return redirect('/fakultas')->with('success', 'Data berhasil ditambahkan');
