@@ -15,8 +15,7 @@ class FakultasController extends Controller
 
     public function create()
     {
-       
-        return view ('fakultas.create', compact('listFakultas'));
+        return view ('fakultas.create');
     }
 
     public function store(Request $request)
@@ -31,24 +30,23 @@ class FakultasController extends Controller
             'nama_fakultas' => $request->nama_fakultas,
             'nama_dekan' => $request->nama_dekan,
         ]);
-
+        
         return redirect('/fakultas')->with('success', 'Data berhasil ditambahkan');
     }
 
-    public function edit($id)
+    public function edit(Fakultas $fakulta)
     {
-        $fakultas = Fakultas::findOrFail($id);
-        return view('fakultas.edit', compact('fakultas'));
+        return view('fakultas.edit', [
+            'fakultas' => $fakulta
+        ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Fakultas $fakultas)
     {
         $request->validate([
             'nama_fakultas' => 'required',
             'nama_dekan' => 'required'
         ]);
-
-        $fakultas = Fakultas::findOrFail($id);
 
         $fakultas->update([
             'nama_fakultas' => $request->nama_fakultas,

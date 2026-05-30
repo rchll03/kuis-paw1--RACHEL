@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Fakultas;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProdiController extends Controller
 {
@@ -27,44 +28,46 @@ class ProdiController extends Controller
             'nama_prodi' => 'required',
             'nama_kaprodi' => 'required',
             'alias_prodi' => 'required',
-            'fakultas_id' => 'required'
+            'fakultas_id' => 'required',
+            'photo_kaprodi' => 'required'
 
         ]);
+        Storage::disk("public")->put("prodi", $request->photo_kaprodi);
 
         Prodi::create([
             'nama_prodi' => $request->nama_prodi,
             'nama_kaprodi' => $request->nama_kaprodi,
             'alias_prodi' => $request->alias_prodi,
-            'fakultas_id' => $request->fakultas_id
+            'fakultas_id' => $request->fakultas_id,
+            'photo_kaprodi' => $request->photo_kaprodi 
         ]);
 
         return redirect('/prodi')
             ->with('success', 'Data berhasil ditambahkan');
     }
 
-    public function edit($id)
+    public function edit(Prodi $prodi)
     {
-        $prodi = Prodi::findOrFail($id);
-
-        return view('prodi.edit', compact('prodi'));
+        $listFakultas = Fakultas::all();
+        
+        return view('prodi.edit', compact('prodi', 'listFakultas'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'fakultas_id' => 'required',
             'nama_prodi' => 'required',
             'nama_kaprodi' => 'required',
-            'alias_prodi' => 'required'
+            'alias_prodi' => 'required',
+            'photo_kaprodi' => 'required'
         ]);
 
         $prodi = Prodi::findOrFail($id);
+         
+        Storage::disk("public")->put("prodi", $request->photo_kaprodi);
 
-        $prodi->update([
-            'nama_prodi' => $request->nama_prodi,
-            'nama_kaprodi' => $request->nama_kaprodi,
-            'alias_prodi' => $request->alias_prodi
-        ]);
+        $prodi->update($validated);
 
         return redirect('/prodi')
             ->with('success', 'Data berhasil diupdate');

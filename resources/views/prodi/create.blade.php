@@ -35,7 +35,7 @@
 
                 @endif
 
-                <form action="/prodi" method="POST">
+                <form action="/prodi" method="POST" enctype="multipart/form-data">
 
                     @csrf
 
@@ -64,6 +64,9 @@
                             @endforeach
                         </select>
                     </div>
+
+                    <input type="file" name="photo_kaprodi" id="" class="form-control" />
+
                     <button type="submit" class="btn btn-primary">
                         Simpan
                     </button>

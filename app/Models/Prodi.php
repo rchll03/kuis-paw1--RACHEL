@@ -11,7 +11,8 @@ class Prodi extends Model
         'nama_prodi',
         'nama_kaprodi',
         'alias_prodi',
-        'fakultas_id'
+        'fakultas_id',
+        'photo_kaprodi'
     ];
 
     public function fakultas(): BelongsToMany
